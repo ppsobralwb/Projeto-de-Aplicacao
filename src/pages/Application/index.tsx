@@ -3,7 +3,7 @@ import { DefaultContainer } from "../../styles/global";
 export default function ApplicationPage() {
     return (
         <DefaultContainer>
-            <h1>Application</h1>
+            <h1>Aplicação</h1>
             <form action="/dashboard">
             <p>
                 <label className='label'>Selecione o arquivo:</label>

@@ -16,6 +16,7 @@ import {
 
 const newApplicationFormValidationSchema = zod.object({
     applicationName: zod.string().min(1, 'Informe o nome da aplicação'),
+    applicationCall: zod.string().min(1, 'Informe o código para chamar a aplicação no terminal'),
     parameter: zod.array(
       zod.object({
         parameterName: zod.string().min(1, 'Informe o nome do parâmetro'),
@@ -55,9 +56,9 @@ export default function CreateApplicationPage() {
             <h1>Crie uma Aplicação</h1>
             <ApplicationFormContainer onSubmit={handleSubmit(handleCreateApplication)} name='application' action=''>
                     <Label>Nome da aplicação:</Label>
-                    <Input required {...register('applicationName')}/>
-                    <Label>Chamada da aplicação do terminal:</Label>
-                    <Input required placeholder='java -jar app.jar %=PARAM1=% %=PARAM2=%' {...register('applicationCall')}/>
+                    <Input {...register('applicationName')}/>
+                    <Label>Chamada da aplicação no terminal:</Label>
+                    <Input placeholder='java -jar app.jar %=PARAM1=% %=PARAM2=%' {...register('applicationCall')}/>
                 {fields.map((item, index) => (
                     <ParameterContainer key={item.id}>
                         <div>
@@ -71,7 +72,7 @@ export default function CreateApplicationPage() {
                         <div>
                             <Label>Tipo do parâmetro:</Label>
                             <ParameterSelect {...register(`parameter.${index}.parameterType`)} >
-                                <option disabled selected value="">Escolha o tipo do parâmetro</option>
+                                <option disabled value="">Escolha o tipo do parâmetro</option>
                                 <option>Integer</option>
                                 <option>Double</option>
                                 <option>Date</option>
