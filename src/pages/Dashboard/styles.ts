@@ -6,6 +6,7 @@ export const Container = styled.div `
     table {
         width: 100%;
         border-spacing: 0.5rem;
+        padding: 0 6rem 0 6rem;
 
         th {
             color: black;
@@ -18,7 +19,7 @@ export const Container = styled.div `
         td {
             padding: 1rem 2rem;
             border: 0;
-            background: black;
+            background: #333;
             color: white;
             border-radius: 0.25rem;
         }
@@ -28,4 +29,11 @@ export const Header = styled.header`
     display: flex;
     justify-content: space-between;
     padding: 0 6rem 0 6rem;
+    margin-bottom: 2rem;
+`
+export const MenuContainer = styled.nav`
+    display: grid;
+    gap: 0.5rem;
+    width: 20rem;
+    grid-template-columns: 3fr 1fr;
 `

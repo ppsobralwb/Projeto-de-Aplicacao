@@ -1,18 +1,34 @@
-import { Link } from "react-router-dom";
-import { Container, Header } from "./styles";
+import { Container, Header, MenuContainer } from "./styles";
+import { Button } from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
 
 export default function DashboardPage() {
+    const auth = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await auth.signout();
+        navigate('/');
+    }
+
     return(
         <Container>
             <Header>
                 <h2>Bem vindo ao sistema, Pedro! 👋</h2>
-                <div>
-                    <button>Criar nova aplicação</button>
-                    <button><Link to="/">Sair</Link></button>
-                </div>
+                <MenuContainer>
+                    <Button 
+                        text='Criar nova aplicação'
+                        onClick={() => navigate('/createApplication')}
+                    />
+                    <Button 
+                        text='Sair'
+                        onClick={handleLogout}
+                    />
+                </MenuContainer>
             </Header>
-            <br/>
-            <br/>
             <table>
                 <caption>
                     <h1>Aplicações</h1>

@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { DefaultContainer, FormContainer } from '../../styles/global'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { Button } from '../../components/Button';
 
 export default function LoginPage() {
     const auth = useContext(AuthContext);
@@ -41,9 +42,10 @@ export default function LoginPage() {
                     <br/>
                     <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
                 </p>
-                <p>
-                    <button id="sub_btn" onClick={handleLogin}>Login</button>
-                </p>
+                <Button 
+                    text="Login" 
+                    onClick={handleLogin}
+                />
             </FormContainer>
             <footer>
                 <p>Primeira vez? <Link to="/register">Crie uma conta</Link>.</p>

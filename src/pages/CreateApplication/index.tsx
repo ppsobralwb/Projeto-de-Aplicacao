@@ -13,6 +13,7 @@ import {
     ParameterSelect, 
     IconButton 
 } from './styles'
+import { Button } from '../../components/Button'
 
 const newApplicationFormValidationSchema = zod.object({
     applicationName: zod.string().min(1, 'Informe o nome da aplicação'),
@@ -90,7 +91,10 @@ export default function CreateApplicationPage() {
                 <IconButton onClick={() => append({ parameterName: "", parameterTag:"", parameterType:"" })}>
                     <PlusCircle size={40} color='green' alt='Adicionar parâmetro' />
                 </IconButton>
-                <button id="sub_btn" type="submit">Criar Aplicação</button>
+                <Button 
+                    text='Criar Aplicação' 
+                    type="submit"
+                />
             </ApplicationFormContainer>
         </DefaultContainer>
     )

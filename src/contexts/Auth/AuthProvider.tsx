@@ -20,68 +20,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element}) => {
         }
         validateToken();
     }, [api]);
-
-    // const signup = async ( name: string, email: string, password: string) => {
-    //     // Chamar a função signup da API
-    //     const newUser = await api.signup(name, email, password);
     
-    //     // Armazenar o novo usuário no localStorage ou onde for apropriado no seu aplicativo
-    //     localStorage.setItem('users_bd', JSON.stringify(newUser));
-
-    //     const usersStorageString = localStorage.getItem('users_bd');
-    //     const usersStorage = JSON.parse(usersStorageString);
-        
-    //     console.log(usersStorage);
-    //     // Atualizar a lista de usuários com o novo usuário
-    //     //const updatedUsers = [...usersStorage, newUser];
-    
-    //     // Armazenar a lista atualizada no localStorage
-    //     //localStorage.setItem('users_bd', JSON.stringify(updatedUsers));
-    
-    //     // Retornar o novo usuário
-    //     return true;
-    // };
-
-    const register = async (name: string, email: string, password: string) => {
-        try {
-            // Simulação da chamada da API e obtenção do novo usuário
-            const newUser = await api.register(name, email, password);
-    
-            // Obtendo os usuários existentes do localStorage
-            const usersFromLocalStorage = getUsersFromLocalStorage();
-    
-            // Adicionando o novo usuário ao array existente
-            const updatedUsers = [...usersFromLocalStorage, newUser];
-    
-            // Salvando o array atualizado de usuários no localStorage
-            localStorage.setItem('users_bd', JSON.stringify(updatedUsers));
-    
-            // Incrementando o ID no localStorage para o próximo usuário
-            incrementIdInLocalStorage();
-    
-            // Retornando o novo usuário adicionado
-            return newUser;
-        } catch (error) {
-            console.error("Erro durante o registro:", error);
-            throw new Error("Ocorreu um erro durante o registro. Tente novamente mais tarde.");
-        }
-    };
-
-    const getIdFromLocalStorage = () => {
-        return parseInt(localStorage.getItem('id') || '0', 10);
-    };
-
-    const incrementIdInLocalStorage = () => {
-        const currentId = getIdFromLocalStorage();
-        localStorage.setItem('id', String(currentId + 1));
-    };
-
-    const getUsersFromLocalStorage = () => {
-        const usersString = localStorage.getItem('users_bd');
-        return usersString ? JSON.parse(usersString) : [];
-    };
-    
-
     // const signup = async (id: number, name: string, email: string, password: string): Promise<User | undefined> => {
     //     try {    
     //         const newUserResult = await api.signup(id, name, email, password);
@@ -124,6 +63,38 @@ export const AuthProvider = ({ children }: { children: JSX.Element}) => {
     //         throw new Error("Ocorreu um erro durante o registro. Tente novamente mais tarde.");
     //     }
     // };
+
+
+    // const signup = async ( name: string, email: string, password: string) => {
+    //     // Chamar a função signup da API
+    //     const newUser = await api.signup(name, email, password);
+    
+    //     // Armazenar o novo usuário no localStorage ou onde for apropriado no seu aplicativo
+    //     localStorage.setItem('users_bd', JSON.stringify(newUser));
+
+    //     const usersStorageString = localStorage.getItem('users_bd');
+    //     const usersStorage = JSON.parse(usersStorageString);
+        
+    //     console.log(usersStorage);
+    //     // Atualizar a lista de usuários com o novo usuário
+    //     //const updatedUsers = [...usersStorage, newUser];
+    
+    //     // Armazenar a lista atualizada no localStorage
+    //     //localStorage.setItem('users_bd', JSON.stringify(updatedUsers));
+    
+    //     // Retornar o novo usuário
+    //     return true;
+    // };
+
+    const register = async (name: string, email: string, password: string) => {
+        try {
+            await api.register(name, email, password);
+            return true;
+        } catch (error) {
+            console.error("Erro durante o registro:", error);
+            throw new Error("Ocorreu um erro durante o registro. Tente novamente mais tarde.");
+        }
+    };
 
     const signin = async (email: string, password: string) => {
         const data = await api.signin(email, password);

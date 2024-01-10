@@ -13,18 +13,19 @@ export default function RegisterPage() {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleRegister = async () => {
-          if (password !== passwordConfirmation) {
+    const handleRegister = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (password !== passwordConfirmation) {
             alert("As senhas não são iguais!");
-            return;
-          }
+        return;
+        }
       
-          const registered = await auth.register(name, email, password);
+        const registered = await auth.register(name, email, password);
       
-          if (registered) {
+        if (registered) {
             alert("Usuário cadatrado com sucesso!");
             navigate("/");
-          }      
+        }      
     };
 
     return (
