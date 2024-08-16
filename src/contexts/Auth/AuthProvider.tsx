@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import { AuthContext } from "./AuthContext"
-import { User } from "../../types/User"
+import { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { User } from "../../types/User";
 import { useApi } from "../../hooks/useApi";
 
 export const AuthProvider = ({ children }: { children: JSX.Element}) => {
@@ -96,6 +96,46 @@ export const AuthProvider = ({ children }: { children: JSX.Element}) => {
         }
     };
 
+    const registerApplication = async (name: string, applicationCall: string, parameters:[]) => {
+        try {
+            await api.registerApplication(name, applicationCall, parameters);
+            return true;
+        } catch (error) {
+            console.log("Erro durante a criação:", error);
+            throw new Error("Ocorreu um erro durante a criação. Tente novamente mais tarde.");
+        }
+    }
+
+    const getApplicationById = async (id: string) => {
+        try {
+            const data = await api.getApplicationById(id);
+            return data;
+        } catch (error) {
+            console.log("Erro durante a procura:", error);
+            throw new Error("Ocorreu um erro durante a procura. Tente novamente mais tarde.");
+        }
+    }
+
+    const updateApplication = async (id: string, name: string, applicationCall: string, parameters:[]) => {
+        try {
+            await api.updateApplication(id, name, applicationCall, parameters);
+            return true;
+        } catch (error) {
+            console.log("Erro durante a atualização:", error);
+            throw new Error("Ocorreu um erro durante a atualização. Tente novamente mais tarde.")
+        }
+    }
+
+    const deleteApplication = async (id: string) => {
+        try {
+            await api.deleteApplication(id);
+            return true;
+        } catch (error) {
+            console.log("Erro durante a deleção:", error);
+            throw new Error("Ocorreu um erro durante a deleção. Tente novamente mais tarde.");
+        }
+    }
+
     const signin = async (email: string, password: string) => {
         const data = await api.signin(email, password);
         if(data.user && data.token) {
@@ -117,7 +157,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element}) => {
     }
     
     return(
-        <AuthContext.Provider value={{ user, register, signin, signout }}>
+        <AuthContext.Provider value={{ user, register, getApplicationById, registerApplication, updateApplication, deleteApplication, signin, signout }}>
             {children}
         </AuthContext.Provider>
     )

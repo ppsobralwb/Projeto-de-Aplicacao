@@ -7,6 +7,7 @@ export const Container = styled.div `
         width: 100%;
         border-spacing: 0.5rem;
         padding: 0 6rem 0 6rem;
+        
 
         th {
             color: black;
@@ -14,6 +15,10 @@ export const Container = styled.div `
             padding: 1rem 2rem;
             text-align: left;
             line-height: 1.5rem;
+
+            &:last-child{
+                text-align: center;
+            }
         }
 
         td {
@@ -22,9 +27,43 @@ export const Container = styled.div `
             background: #333;
             color: white;
             border-radius: 0.25rem;
+
+            button {
+                margin-left: 0.25rem;
+                padding: 0.5rem;
+                width: 5rem;
+            
+                font-weight: 700;
+                border: none;
+                border-radius: 6px;
+                margin-top: 0.5rem;
+                text-transform: uppercase;
+                transition: 0.4s;
+                
+                cursor: pointer;
+
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                :last-child{
+                    text-align: center;
+                }
+            }
         }
     }
 `
+
+export const ContentContainer = styled.div `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 export const Header = styled.header`
     display: flex;
     justify-content: space-between;

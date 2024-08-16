@@ -6,6 +6,7 @@ import RegisterPage  from './pages/Register'
 import LoginPage from './pages/Login'
 import ApplicationPage from './pages/Application'
 import { RequireAuth } from './contexts/Auth/RequireAuth'
+import UpdateApplicationPage from './pages/UpdateApplicationPage'
 
 export function Router() {
   return (
@@ -15,7 +16,8 @@ export function Router() {
         <Route path="/forgot-password" element={ <ForgotPasswordPage /> } />
         <Route path="/dashboard" element={< RequireAuth><DashboardPage /></RequireAuth> } />
         <Route path="/createApplication" element={<RequireAuth><CreateApplicationPage /></RequireAuth>  } />
-        <Route path="/application" element={ <RequireAuth><ApplicationPage /></RequireAuth> } />
+        <Route path="/updateApplication/:id" element={ <RequireAuth><UpdateApplicationPage /></RequireAuth> } />
+        <Route path="/application/:id" element={ <RequireAuth><ApplicationPage /></RequireAuth> } />
     </Routes>
   )
 }

@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { DefaultContainer, FormContainer } from '../../styles/global'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { Button } from '../../components/Button';
 
 export default function RegisterPage() {
     // const [id, setId] = useState(0);
@@ -23,7 +24,7 @@ export default function RegisterPage() {
         const registered = await auth.register(name, email, password);
       
         if (registered) {
-            alert("Usuário cadatrado com sucesso!");
+            alert("Usuário cadastrado com sucesso!");
             navigate("/");
         }      
     };
@@ -50,7 +51,10 @@ export default function RegisterPage() {
                     <input type="password" value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)} required />
                 </p>
                 <p>
-                    <button id="sub_btn" onClick={handleRegister}>Criar Conta</button>
+                    <Button 
+                        text="Criar Conta" 
+                        onClick={handleRegister}
+                    />
                 </p>
             </FormContainer>
             <footer>

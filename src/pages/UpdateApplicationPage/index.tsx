@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { MinusCircle, PlusCircle } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 
 import { Button } from '../../components/Button'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/Auth/AuthContext';
 
 import {
@@ -32,11 +32,12 @@ const newApplicationFormValidationSchema = zod.object({
 
 type NewApplicationFormData = zod.infer<typeof newApplicationFormValidationSchema>
 
-export default function CreateApplicationPage() {
+export default function UpdateApplicationPage() {
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
 
-    const { register, handleSubmit, formState, control } = useForm({
+    const { register, handleSubmit, setValue, formState, control } = useForm({
         resolver:zodResolver(newApplicationFormValidationSchema),
         defaultValues: {
             applicationName: '',
@@ -50,15 +51,35 @@ export default function CreateApplicationPage() {
        name: "parameter",
     });
 
-    const handleCreateApplication = async (data: NewApplicationFormData) => {
-        const applicationRegistered = await auth.registerApplication(data.applicationName, data.applicationCall, data.parameter);
-      
-        if (applicationRegistered) {
-            alert("Aplicação cadastrada com sucesso!");
-            navigate("/dashboard");
-        }
-        else {
-            alert("Algo deu errado!")
+    useEffect(() => {
+        const loadApplicationData = async () => {
+            if (id) {
+                try {
+                    const application = await auth.getApplicationById(id);
+                    setValue('applicationName', application.name);
+                    setValue('applicationCall', application.applicationCall);
+                    setValue('parameter', application.parameters);
+                } catch (error) {
+                    console.error('Erro ao carregar a aplicação:', error);
+                    alert('Erro ao carregar a aplicação');
+                    navigate('/dashboard');
+                }
+            }
+        };
+
+        loadApplicationData();
+    }, [id, setValue, auth, navigate])
+
+    const handleUpdateApplication = async (data: NewApplicationFormData) => {
+        if (id) {
+            const applicationUpdated = await auth.updateApplication(id, data.applicationName, data.applicationCall, data.parameter);
+            if (applicationUpdated) {
+                alert("Aplicação atualizada com sucesso!");
+                navigate("/dashboard");
+            }
+            else {
+                alert("Algo deu errado!")
+            }
         }
     };
 
@@ -66,8 +87,8 @@ export default function CreateApplicationPage() {
     
     return (
         <Container>
-            <h1>Crie uma Aplicação</h1>
-            <ApplicationFormContainer onSubmit={handleSubmit(handleCreateApplication)} name='application' action=''>
+            <h1>Edite uma Aplicação</h1>
+            <ApplicationFormContainer onSubmit={handleSubmit(handleUpdateApplication)} name='application' action=''>
                     <Label>Nome da aplicação:</Label>
                     <Input {...register('applicationName')}/>
                     <Label>Chamada da aplicação no terminal:</Label>
@@ -104,7 +125,7 @@ export default function CreateApplicationPage() {
                     <PlusCircle size={40} color='green' alt='Adicionar parâmetro' />
                 </IconButton>
                 <Button 
-                    text='Criar Aplicação' 
+                    text='Atualizar Aplicação' 
                     type="submit"
                 />
                 <Button

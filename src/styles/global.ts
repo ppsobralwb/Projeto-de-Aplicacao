@@ -14,8 +14,7 @@ export const DefaultContainer = styled.main`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100%;
-    padding-top: 2rem;
+    height: 100vh;
 
     h1 {
         font-weight: 300
